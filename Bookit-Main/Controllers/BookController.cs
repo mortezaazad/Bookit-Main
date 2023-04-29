@@ -1,5 +1,6 @@
 ﻿using Bookit_Main.Data;
 using Bookit_Main.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookit_Main.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class BookController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -18,6 +20,13 @@ namespace Bookit_Main.Controllers
         public IActionResult Index()
         {
             var model= _db.Books;
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public IActionResult Gallery()
+        {
+            var model = _db.Books;
             return View(model);
         }
 
@@ -35,6 +44,12 @@ namespace Bookit_Main.Controllers
         }
 
         public IActionResult Details(int id)
+        {
+            var model = _db.Books.Find(id);
+            return View(model);
+        }
+        [AllowAnonymous]
+        public IActionResult More(int id)
         {
             var model = _db.Books.Find(id);
             return View(model);

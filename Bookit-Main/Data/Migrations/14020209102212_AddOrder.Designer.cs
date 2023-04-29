@@ -4,14 +4,16 @@ using Bookit_Main.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bookit_Main.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("14020209102212_AddOrder")]
+    partial class AddOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace Bookit_Main.Data.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<int>("BookId");
+                    b.Property<string>("BookId");
 
                     b.Property<string>("FullName");
 
@@ -60,7 +62,7 @@ namespace Bookit_Main.Data.Migrations
 
                     b.Property<string>("PostalCode");
 
-                    b.Property<int>("Price");
+                    b.Property<string>("Price");
 
                     b.Property<int>("State");
 

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Bookit_Main.Models.Book>
+
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<h1>Book Gallery</h1>
+<hr />
+@foreach (var book in Model)
+{
+    <div class="row">
+        <div class="col-sm-2">
+            <img src="@book.ImagePath" alt="@book.ImagePath" height="200px" />
+        </div>
+        <div class="col-sm-10">
+            <h4>@book.Name (@book.Year)</h4>
+            <p>Author: @book.Author</p>
+            <p>Year: @book.Year</p>
+            <p>Pages: @book.Pages</p>
+            <p>Price: @book.Price</p>
+            <p>
+                <a asp-action="More" asp-route-id="@book.Id" asp-area="" class="btn btn-primary">more</a>
+                <a asp-action="Create" asp-route-id="@book.Id" asp-controller="Order" asp-area="" class="btn btn-success" style="width:200px">Order Now</a>
+            </p>
+        </div>
+    </div>
+    <hr />
+}
