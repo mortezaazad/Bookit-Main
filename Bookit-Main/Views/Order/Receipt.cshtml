@@ -1,10 +1,10 @@
 ﻿@model Bookit_Main.Models.Order
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Receipt";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2>@ViewData["Title"]</h2>
 
 <div>
     <h4>Order</h4>
@@ -35,12 +35,6 @@
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BookId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BookId)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class = "col-sm-10">
@@ -50,17 +44,10 @@
             @Html.DisplayNameFor(model => model.TimeCreated)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TimeCreated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.State)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.State)
+            @Model.TimeCreated.ToShortDateString()
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Gallery" asp-controller="Book" asp-area="">Back to Gallery</a>
 </div>

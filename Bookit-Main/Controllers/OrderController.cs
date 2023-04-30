@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bookit_Main.Data;
 using Bookit_Main.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bookit_Main.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -44,14 +46,16 @@ namespace Bookit_Main.Controllers
         }
 
         // GET: Order/Create
-        public IActionResult Create(int id)
+        [AllowAnonymous]
+        public IActionResult Create(int bookId)
         {
-            var book = _context.Books.Find(id);
+            var book = _context.Books.Find(bookId);
             var model = new Order
             {
                 Price = book.Price,
                 BookId = book.Id
             };
+            ViewData["book"] = book;
             return View(model);
         }
 
@@ -59,14 +63,16 @@ namespace Bookit_Main.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FullName,Address,PostalCode,PhoneNumber,BookId,Price,TimeCreated,State")] Order order)
         {
             if (ModelState.IsValid)
             {
+                order.TimeCreated = DateTime.Now;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Receipt",order);
             }
             return View(order);
         }

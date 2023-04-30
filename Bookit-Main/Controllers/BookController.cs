@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookit_Main.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class BookController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -19,14 +19,24 @@ namespace Bookit_Main.Controllers
         }
         public IActionResult Index()
         {
-            var model= _db.Books;
+            var model = _db.Books;
             return View(model);
         }
 
         [AllowAnonymous]
-        public IActionResult Gallery()
+        [Route("book/gallery/{term?}")]
+        public IActionResult Gallery(string term = "")
         {
-            var model = _db.Books;
+            IEnumerable<Book> model;
+            if (string.IsNullOrEmpty(term))
+            {
+                model = _db.Books;
+            }
+            else
+            {
+                model = _db.Books.Where(x => x.Name.Contains(term));
+            }
+            ViewData["term"] = term;
             return View(model);
         }
 
